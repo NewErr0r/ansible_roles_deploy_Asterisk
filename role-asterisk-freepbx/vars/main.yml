@@ -24,3 +24,7 @@ packages_php:
 
 path_php_ini: /etc/php.ini
 path_php_fpm: /etc/php-fpm.d/www.conf
+
+path_download: "/root"
+
+path_asterisk_conf: "/etc/asterisk/asterisk.conf"

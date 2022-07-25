@@ -39,4 +39,10 @@
     name: nginx 
     state: restarted  
 
+- name: Started and Enabled Asterisk
+  service: 
+    name: asterisk
+    enabled: true 
+    state: started  
+
     

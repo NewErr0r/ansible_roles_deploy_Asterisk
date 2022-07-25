@@ -4,3 +4,5 @@ timezone: "Europe/Moscow"
 ####MariaDB####
 mysql_root_user: "root"
 mysql_root_pass: "P@ssw0rd"
+
+asterisk_url: "http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz"

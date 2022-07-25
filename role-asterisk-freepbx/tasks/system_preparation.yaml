@@ -36,7 +36,8 @@
 
 - name: Disabled SELinux now
   shell: setenforce 0  
-
+  when: ansible_selinux.status == "enabled"
+  
 - name: Disabled SELinux 
   ansible.posix.selinux:
     state: disabled

@@ -4,3 +4,6 @@
 
 - name: Configuring the web server - NGINX + PHP + MariaDB + NodeJS
   include_tasks: web_server.yaml
+
+- name: Installing Asterisk
+  include_tasks: deploy_asterist.yaml

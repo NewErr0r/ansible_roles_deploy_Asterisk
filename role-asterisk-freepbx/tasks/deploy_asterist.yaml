@@ -1,0 +1,53 @@
+---
+- name: check if CentOS PowerTools repo enabled
+  shell: /usr/bin/dnf -q repolist --enabled PowerTools && echo disabled || echo enabled
+  register: powertools
+
+- name: Install the packages required for the build
+  command: dnf --enablerepo=powertools install libedit-devel -y
+  when: powertools.stdout == "disabled"
+
+- name: Download Asterisk 
+  get_url:
+    url: "{{ asterisk_url }}"
+    dest: "{{ path_download }}"
+
+- name: Unpacking the archive
+  unarchive:
+    src: asterisk-16-current.tar.gz
+    dest: "{{ path_download }}"
+    remote_src: yes
+
+- name: Setting dependencies for asterisk
+  shell:  |
+    cd {{ path_download }}/asterisk-*/
+    ./contrib/scripts/install_prereq install
+    make distclean
+    ./contrib/scripts/get_mp3_source.sh
+    ./configure
+    make
+    make install
+    make config
+    make samples
+
+- name: Setting "asterisk.conf"
+  copy: 
+    src: asterisk.conf 
+    dest: "{{ path_asterisk_conf }}"
+
+- name: Granting rights to the project "/var/run/asterisk"
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    owner: asterisk
+    group: asterisk
+  loop: 
+    - /var/run/asterisk
+    - /etc/asterisk
+    - /var/lib/asterisk
+    - /var/log/asterisk
+    - /var/spool/asterisk
+    - /var/log/asterisk
+  notify: 
+    - Started and Enabled Asterisk
