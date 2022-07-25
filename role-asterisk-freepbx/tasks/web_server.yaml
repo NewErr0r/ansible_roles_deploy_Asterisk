@@ -1,0 +1,53 @@
+--- 
+- name: Install MariaDB
+  dnf: 
+    name: "{{ packages_mariadb }}"
+    state: latest
+  notify:
+    - Started and Enabled MariaDB
+
+- name: Configurations root password for MariaDB
+  mysql_user:
+    check_implicit_admin: true
+    login_user: "{{ mysql_root_user }}" 
+    login_password: "{{ mysql_root_pass }}"
+    user: root 
+    password: "{{ mysql_root_pass }}"
+    host: localhost 
+
+- name: Install NGINX
+  dnf: 
+    name: nginx 
+    state: latest
+
+- name: Configure NGINX
+  copy:
+    src: nginx.conf
+    dest: "{{ path_nginx_conf }}"
+  notify: 
+    - Started and Enabled NGINX
+    - Restart NGINX
+
+- name: Install packages PHP
+  dnf: 
+    name: "{{ packages_php }}"
+    state: latest
+  notify: 
+    - Disable httpd
+
+- name: Setting file "php.ini"
+  template:
+    src: php.ini.j2
+    dest: "{{ path_php_ini }}"
+
+- name: Setting PHP-FPM 
+  copy:
+    src: www.conf
+    dest: "{{ path_php_fpm }}"
+  notify: 
+    - Started and Enabled PHP-FPM
+
+- name: Install NodeJS
+  dnf: 
+    name: nodejs 
+    state: latest

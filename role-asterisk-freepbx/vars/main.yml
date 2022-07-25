@@ -1,0 +1,26 @@
+---
+packages:
+  - wget 
+  - tar 
+  - glibc-langpack-ru
+
+packages_mariadb:
+  - mariadb-server
+  - python3-PyMySQL
+
+path_nginx_conf: /etc/nginx/nginx.conf
+
+packages_php:
+  - php 
+  - php-fpm 
+  - php-bcmath 
+  - php-gd 
+  - php-json 
+  - php-mbstring 
+  - php-mysqlnd 
+  - php-pear 
+  - php-snmp 
+  - php-zip
+
+path_php_ini: /etc/php.ini
+path_php_fpm: /etc/php-fpm.d/www.conf

@@ -1,0 +1,7 @@
+---
+- name: Installing Asterisk + FreePBX
+  hosts: all
+  become: true 
+
+  roles:
+    - role-asterisk-freepbx

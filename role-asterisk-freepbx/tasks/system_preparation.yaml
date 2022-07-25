@@ -1,0 +1,53 @@
+--- 
+- name: Configure timedate
+  shell: |
+    timedatectl set-timezone "{{ timezone }}"
+
+- name: Install Chrony
+  dnf:
+    name: chrony
+    state: latest
+  notify:
+    - Started and Enabled Chronyd 
+
+- name: Configure Firewalld ports
+  firewalld: 
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled 
+  loop: 
+    - "5060/tcp"
+    - "5060/udp"
+    - "5061/tcp"
+    - "5061/udp"
+  notify:
+    - Restart Firewalld
+
+- name: Configure Firewalld service
+  firewalld: 
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - http
+    - https 
+  notify:
+    - Restart Firewalld
+
+- name: Disabled SELinux now
+  shell: setenforce 0  
+
+- name: Disabled SELinux 
+  ansible.posix.selinux:
+    state: disabled
+  when: ansible_selinux.status == "enabled"
+
+- name: Install packages
+  dnf: 
+    name: "{{ packages }}"
+    state: latest
+
+- name: Create User Asterisk
+  user: 
+    name: asterisk
+    comment: asterisk

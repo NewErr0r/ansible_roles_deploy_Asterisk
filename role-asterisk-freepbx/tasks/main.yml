@@ -1,0 +1,6 @@
+---
+- name: System preparation
+  include_tasks: system_preparation.yaml
+
+- name: Configuring the web server - NGINX + PHP + MariaDB + NodeJS
+  include_tasks: web_server.yaml
