@@ -9,4 +9,4 @@
   include_tasks: deploy_asterist.yaml
 
 - name: Installing FreePBX
-  include_tasks: deploy_frepbx.yaml
+  include_tasks: deploy_freepbx.yaml
