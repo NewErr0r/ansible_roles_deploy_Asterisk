@@ -3,8 +3,12 @@
   dnf: 
     name: "{{ packages_mariadb }}"
     state: latest
-  notify:
-    - Started and Enabled MariaDB
+
+- name: Started and Enabled MariaDB
+  service:
+    name: mariadb
+    enabled: true 
+    state: started
 
 - name: Configurations root password for MariaDB
   mysql_user:
@@ -44,8 +48,12 @@
   copy:
     src: www.conf
     dest: "{{ path_php_fpm }}"
-  notify: 
-    - Started and Enabled PHP-FPM
+
+- name: Started and Enabled PHP-FPM
+  service: 
+    name: php-fpm 
+    enabled: true 
+    state: started
 
 - name: Install NodeJS
   dnf: 

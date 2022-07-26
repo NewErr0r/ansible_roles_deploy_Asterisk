@@ -6,7 +6,7 @@
   include_tasks: web_server.yaml
 
 - name: Installing Asterisk
-  include_tasks: deploy_asterist.yaml
+  include_tasks: deploy_asterisk.yaml
 
 - name: Installing FreePBX
   include_tasks: deploy_freepbx.yaml

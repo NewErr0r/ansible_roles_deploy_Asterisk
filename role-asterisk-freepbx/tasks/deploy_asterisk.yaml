@@ -49,5 +49,9 @@
     - /var/log/asterisk
     - /var/spool/asterisk
     - /var/log/asterisk
-  notify: 
-    - Started and Enabled Asterisk
+
+- name: Started Asterisk
+  shell:  | 
+    killall -9 safe_asterisk
+    killall -9 asterisk
+    systemctl start asterisk

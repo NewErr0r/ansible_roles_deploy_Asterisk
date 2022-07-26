@@ -7,9 +7,13 @@
   dnf:
     name: chrony
     state: latest
-  notify:
-    - Started and Enabled Chronyd 
 
+- name: Started and Enabled Chronyd
+  service: 
+    name: chronyd 
+    enabled: true 
+    state: started
+    
 - name: Configure Firewalld ports
   firewalld: 
     port: "{{ item }}"
