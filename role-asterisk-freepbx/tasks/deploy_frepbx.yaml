@@ -1,0 +1,22 @@
+---
+- name: Install Packages
+  yum:
+    name: "{{ packages_freepbx }}"
+    state: latest
+
+- name: Download FreePBX 
+  get_url:
+    url: "{{ freepbx_url }}"
+    dest: "{{ path_download }}"
+
+- name: Unpacking the archive
+  unarchive:
+    src: freepbx-15.0-latest.tgz
+    dest: "{{ path_download }}"
+    remote_src: yes
+
+- name: Install FreePBX
+  shell:  | 
+    cd freepbx
+    ./start_asterisk start
+    ./install -n --dbuser root --dbpass {{ mysql_root_pass }} --webroot=/usr/share/nginx/html
