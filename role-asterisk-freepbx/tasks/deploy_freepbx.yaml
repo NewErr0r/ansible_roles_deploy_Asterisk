@@ -1,4 +1,9 @@
 ---
+- name: Install Epel-Release
+  yum:
+    name: epel-release 
+    state: latest
+
 - name: Install Packages
   yum:
     name: "{{ packages_freepbx }}"
